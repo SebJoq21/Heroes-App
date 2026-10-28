@@ -1,12 +1,13 @@
 import { Progress as ProgressPrimitive } from "@base-ui/react/progress"
-import { cn } from "cn"
+import { cn } from "cn" 
 
 function Progress({
   className,
   children,
   value,
+  activeColor = 'bg-primary',
   ...props
-}: ProgressPrimitive.Root.Props) {
+}: ProgressPrimitive.Root.Props & { activeColor?: string}) {
   return (
     <ProgressPrimitive.Root
       value={value}
@@ -16,7 +17,7 @@ function Progress({
     >
       {children}
       <ProgressTrack>
-        <ProgressIndicator />
+        <ProgressIndicator activeColor={activeColor} />
       </ProgressTrack>
     </ProgressPrimitive.Root>
   )
@@ -37,12 +38,13 @@ function ProgressTrack({ className, ...props }: ProgressPrimitive.Track.Props) {
 
 function ProgressIndicator({
   className,
+  activeColor,
   ...props
-}: ProgressPrimitive.Indicator.Props) {
+}: ProgressPrimitive.Indicator.Props & { activeColor?: string }) {
   return (
     <ProgressPrimitive.Indicator
       data-slot="progress-indicator"
-      className={cn("h-full bg-primary transition-all", className)}
+      className={cn(activeColor, "h-full transition-all", className)}
       {...props}
     />
   )

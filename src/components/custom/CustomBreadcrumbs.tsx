@@ -17,7 +17,7 @@ interface Props {
   breadCrumbs?: BreadCrumb[];
 }
 
-export const CustomBreadcrumbs = ({ currentPage, breadCrumbs = [] }: Props) => {
+export const CustomBreadCrumbs = ({ currentPage, breadCrumbs = [] }: Props) => {
   return (
     <Breadcrumb className="my-5">
       <BreadcrumbList>

@@ -1,76 +1,76 @@
-import {
-  Heart,
-  ChevronLeft,
-  ChevronRight,
-  MoreHorizontal,
-} from "lucide-react"
-import { Button } from "@/components/ui/button"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CustomJumbotron } from "@/components/custom/CustomJumbotron"
 import { HeroStats } from "@/heroes/components/HeroStats"
 import { HeroGrid } from "@/heroes/components/HeroGrid"
+import { useState } from "react"
+import { CustomPagination } from "@/components/custom/CustomPagination"
 
 export const HomePage = () => {
+  const [activeTab, setActiveTab] = useState<
+    'all' | 'favorites' | 'heroes' | 'villains'
+  >('all')
+
   return (
-    <>
-      <>
-        {/* Header */}
-        <CustomJumbotron
-          title="Universo de superheroes"
-          description="Descubre, explora y administra superheroes y villanos"
-        />
+    <div className="container mx-auto px-4 py-8 flex flex-col gap-8 min-h-screen">
+      
+      {/* Header */}
+      <CustomJumbotron
+        title="Universo de superheroes"
+        description="Descubre, explora y administra superheroes y villanos"
+      />
 
-        {/* Stats Dashboard */}
-        <HeroStats/>
+      {/* Stats Dashboard */}
+      <HeroStats />
 
-        {/* Controls */}
+      {/* Tabs */}
+      <Tabs value={activeTab} onValueChange={(value) => setActiveTab(value as any)} className="w-full">
+        <TabsList className="grid w-full grid-cols-4 h-12">
+          <TabsTrigger value="all">All Characters (16)</TabsTrigger>
+          
+          <TabsTrigger value="favorites" className="flex items-center gap-2">
+            Favorites (3)
+          </TabsTrigger>
+          
+          <TabsTrigger value="heroes">Heroes (12)</TabsTrigger>
+          <TabsTrigger value="villains">Villains (2)</TabsTrigger>
+        </TabsList>
+      </Tabs>
+
+      <div className="mt-2 w-full">
         
+        {activeTab === 'all' && (
+          <div className="animate-in fade-in duration-500">
+            <h1>Todos los Personajes</h1>
+            <HeroGrid />
+          </div>
+        )}
 
-        {/* Advanced Filters */}
-        
+        {activeTab === 'favorites' && (
+          <div className="animate-in fade-in duration-500">
+            <h1>Favoritos</h1>
+            <HeroGrid />
+          </div>
+        )}
 
-        {/* Tabs */}
-        <Tabs value="all" className="mb-8">
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="all">All Characters (16)</TabsTrigger>
-            <TabsTrigger value="favorites" className="flex items-center gap-2">
-              <Heart className="h-4 w-4" />
-              Favorites (3)
-            </TabsTrigger>
-            <TabsTrigger value="heroes">Heroes (12)</TabsTrigger>
-            <TabsTrigger value="villains">Villains (2)</TabsTrigger>
-          </TabsList>
-        </Tabs>
+        {activeTab === 'heroes' && (
+          <div className="animate-in fade-in duration-500">
+            <h1>Héroes</h1>
+            <HeroGrid />
+          </div>
+        )}
 
-        {/* Character Grid */}
-        <HeroGrid/>
+        {activeTab === 'villains' && (
+          <div className="animate-in fade-in duration-500">
+            <h1>Villanos</h1>
+            <HeroGrid />
+          </div>
+        )}
 
-        {/* Pagination */}
-        <div className="flex items-center justify-center space-x-2">
-          <Button variant="outline" size="sm" disabled>
-            <ChevronLeft className="h-4 w-4" />
-            Previous
-          </Button>
+      </div>
 
-          <Button variant="default" size="sm">
-            1
-          </Button>
-          <Button variant="outline" size="sm">
-            2
-          </Button>
-          <Button variant="outline" size="sm">
-            3
-          </Button>
-          <Button variant="ghost" size="sm" disabled>
-            <MoreHorizontal className="h-4 w-4" />
-          </Button>
-
-          <Button variant="outline" size="sm">
-            Next
-            <ChevronRight className="h-4 w-4" />
-          </Button>
-        </div>
-      </>
-    </>
+      {/* Pagination */}
+      <CustomPagination totalPages={8}/>
+      
+    </div>
   )
 }

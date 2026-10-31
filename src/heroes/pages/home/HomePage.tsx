@@ -2,14 +2,22 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { CustomJumbotron } from "@/components/custom/CustomJumbotron"
 import { HeroStats } from "@/heroes/components/HeroStats"
 import { HeroGrid } from "@/heroes/components/HeroGrid"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { CustomPagination } from "@/components/custom/CustomPagination"
-import { CustomBreadCrumbs } from "@/components/custom/CustomBreadcrumbs"
+import { CustomBreadCrumbs } from "@/components/custom/CustomBreadCrumbs"
+import { getHeroesByPage } from "@/heroes/actions/get-heroes-by-page.action"
 
 export const HomePage = () => {
   const [activeTab, setActiveTab] = useState<
     'all' | 'favorites' | 'heroes' | 'villains'
   >('all')
+
+  useEffect(() => {
+    getHeroesByPage().then((heroes) => {
+      console.log({heroes})
+    })
+
+  }, [])
 
   return (
     <div className="container mx-auto px-4 py-8 flex flex-col gap-8 min-h-screen">

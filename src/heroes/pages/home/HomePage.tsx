@@ -13,13 +13,13 @@ export const HomePage = () => {
     'all' | 'favorites' | 'heroes' | 'villains'
   >('all')
 
-  const { data } = useQuery({
+  const { data: heroesResponse } = useQuery({
     queryKey: ['heroes'],
     queryFn: () => getHeroesByPageAction(),
     staleTime: 1000 * 60 * 5
   })
 
-  console.log({data})
+  console.log({ heroesResponse })
 
   // useEffect(() => {
   //   getHeroesByPage().then()
@@ -59,28 +59,28 @@ export const HomePage = () => {
         {activeTab === 'all' && (
           <div className="animate-in fade-in duration-500">
             <h1>Todos los Personajes</h1>
-            <HeroGrid />
+            <HeroGrid heroes={ heroesResponse?.heroes ?? [] } />
           </div>
         )}
 
         {activeTab === 'favorites' && (
           <div className="animate-in fade-in duration-500">
             <h1>Favoritos</h1>
-            <HeroGrid />
+            <HeroGrid heroes={[]} />
           </div>
         )}
 
         {activeTab === 'heroes' && (
           <div className="animate-in fade-in duration-500">
             <h1>Héroes</h1>
-            <HeroGrid />
+            <HeroGrid heroes={[]} />
           </div>
         )}
 
         {activeTab === 'villains' && (
           <div className="animate-in fade-in duration-500">
             <h1>Villanos</h1>
-            <HeroGrid />
+            <HeroGrid heroes={[]} />
           </div>
         )}
 
